@@ -1,13 +1,10 @@
 FROM centos:latest
-MAINTAINER dev@gmail.com
-RUN yum -y update
-RUN yum install -y httpd
-RUN yum install -y unzip
-RUN yum install -y zip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page296/oxer.zip /var/www/html
-WORKDIR /var/www/html
-RUN unzip oxer.zip 
-RUN cp -rvf oxer-html/* .
-RUN rm -rf *.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+RUN yum -y update && \
+    yum install -y httpd unzip zip && \
+    yum clean all
+RUN curl -L -o /var/www/html/oxer.zip https://www.free-css.com/assets/files/free-css-templates/download/page296/oxer.zip
+RUN unzip oxer.zip && \
+    cp -rvf oxer-html/* . && \
+    rm -rf *.zip oxer-html
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80
