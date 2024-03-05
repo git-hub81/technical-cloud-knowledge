@@ -1,8 +1,4 @@
-FROM centos:8
-RUN yum clean all && \
-    yum makecache
-RUN sed -i 's/mirrorlist=/#mirrorlist=/g' /etc/yum.repos.d/CentOS-AppStream.repo && \
-    sed -i 's/#baseurl=/baseurl=/g' /etc/yum.repos.d/CentOS-AppStream.repo
+FROM httpd
 RUN yum -y update && \
     yum install -y httpd unzip zip && \
     yum clean all
